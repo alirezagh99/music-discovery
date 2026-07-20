@@ -4,6 +4,7 @@ import { useRef, useState } from "react";
 import { generatePeaks } from "@/lib/generatePeaks";
 import { generateFingerprints } from "@/lib/generateFingerprints";
 import { decodeBlob } from "@/lib/decodeBlob";
+import { Button } from "@/components/ui/button";
 
 export default function Home() {
   const [audioUrl, setAudioUrl] = useState("");
@@ -58,21 +59,35 @@ export default function Home() {
 
     const audioBuffer = await decodeBlob(audioBlob);
 
-    const peaks = generatePeaks(audioBuffer);
+    const audioBufferLike = {
+      sampleRate: audioBuffer.sampleRate,
+      channelData: Array.from(
+        { length: audioBuffer.numberOfChannels },
+        (_, i) => audioBuffer.getChannelData(i),
+      ),
+    };
 
+    console.log("audioBufferLike: ", audioBufferLike);
+    const peaks = generatePeaks(audioBufferLike);
+
+    console.log("peaks: ", peaks);
     const fingerprints = generateFingerprints(peaks);
 
-    console.log(fingerprints);
+    console.log("fingerprints: ", fingerprints);
   };
 
   return (
     <div className={"flex flex-col gap-6"}>
-      <div className="flex flex-row items-center gap-4">
+      {/* <div className="flex flex-row items-center gap-4">
         <button onClick={() => startRecording()}>Start</button>
         <button onClick={() => handleStopButton()}>Stop</button>
         <button onClick={() => handleVisualization()}>Visualization</button>
       </div>
-      {audioUrl && <audio controls src={audioUrl} />}
+      {audioUrl && <audio controls src={audioUrl} />} */}
+
+      {/* <div>
+        <Button>Discover</Button>
+      </div> */}
     </div>
   );
 }

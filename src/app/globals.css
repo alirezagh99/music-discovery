@@ -1,1 +1,119 @@
 @import "tailwindcss";
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
+
+:root {
+  --background: #fffbe6;
+  --secondary-background: #ffffff;
+  --foreground: #111111;
+  --main-foreground: #111111;
+
+  /* Primary yellow */
+  --main: #ffd93d;
+  --border: #111111;
+  --ring: #111111;
+  --overlay: rgba(17, 17, 17, 0.8);
+  --shadow: 4px 4px 0px 0px var(--border);
+  --chart-1: #ffd93d;
+  --chart-2: #ff6b6b;
+  --chart-3: #4dabf7;
+  --chart-4: #51cf66;
+  --chart-5: #9775fa;
+  --chart-active-dot: #000;
+
+  --primary: var(--main);
+  --primary-foreground: var(--main-foreground);
+  --card: var(--secondary-background);
+  --card-foreground: var(--foreground);
+  --secondary: var(--secondary-background);
+  --secondary-foreground: var(--foreground);
+
+  --muted: #f5efcc;
+  --muted-foreground: #555555;
+
+  --destructive: #ff4d50;
+  --destructive-foreground: white;
+
+  --font-sans: var(--font-inter-sans);
+}
+
+.dark {
+  --background: #111111;
+  --secondary-background: #1c1c1c;
+  --foreground: #fffbe6;
+  --main-foreground: #111111;
+  --main: #ffd93d;
+  --border: #fffbe6;
+  --ring: #ffd93d;
+  --overlay: rgba(0, 0, 0, 0.8);
+  --shadow: 4px 4px 0px 0px var(--border);
+  --chart-1: #ffd93d;
+  --chart-2: #ff8787;
+  --chart-3: #74c0fc;
+  --chart-4: #69db7c;
+  --chart-5: #b197fc;
+  --chart-active-dot: #fff;
+}
+
+@theme inline {
+  --color-main: var(--main);
+  --color-background: var(--background);
+  --color-secondary-background: var(--secondary-background);
+  --color-foreground: var(--foreground);
+  --color-main-foreground: var(--main-foreground);
+  --color-border: var(--border);
+  --color-overlay: var(--overlay);
+  --color-ring: var(--ring);
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+
+  /* Neobrutalism tokens */
+
+  --spacing-boxShadowX: 6px;
+  --spacing-boxShadowY: 6px;
+
+  --spacing-reverseBoxShadowX: -6px;
+  --spacing-reverseBoxShadowY: -6px;
+
+  --radius-base: 8px;
+
+  --shadow-shadow: var(--shadow);
+  --font-weight-base: 500;
+  --font-weight-heading: 700;
+
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+
+  --color-destructive: var(--destructive);
+
+  --font-sans: var(--font-inter-sans);
+  --font-display: var(--font-space-grotesk);
+}
+
+@layer base {
+  body {
+    @apply text-foreground font-base bg-background;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    @apply font-heading;
+  }
+}
