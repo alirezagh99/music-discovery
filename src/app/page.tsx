@@ -4,7 +4,7 @@ import { useRef, useState } from "react";
 import { generatePeaks } from "@/lib/generatePeaks";
 import { generateFingerprints } from "@/lib/generateFingerprints";
 import { decodeBlob } from "@/lib/decodeBlob";
-import { Button } from "@/components/ui/button";
+import { Hero } from "@/Modules/Home/Components/Hero";
 
 export default function Home() {
   const [audioUrl, setAudioUrl] = useState("");
@@ -77,7 +77,8 @@ export default function Home() {
   };
 
   return (
-    <div className={"flex flex-col gap-6"}>
+    <div className={"flex flex-col gap-6 px-4 container 2xl:max-w-360 mx-auto"}>
+      <Hero />
       {/* <div className="flex flex-row items-center gap-4">
         <button onClick={() => startRecording()}>Start</button>
         <button onClick={() => handleStopButton()}>Stop</button>
