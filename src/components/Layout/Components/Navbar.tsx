@@ -6,20 +6,43 @@ import { NavbarItems } from "./NavbarItems";
 import { NavbarSidebar } from "./NavbarSidebar";
 import { Button } from "@/components/ui/button";
 import { MenuIcon } from "lucide-react";
-import { usePathname } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { cn } from "@/lib/utils";
 
 export const Navbar = () => {
-  const pathname = usePathname();
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
 
   const navbarItems = [
     { name: "About", src: "/about" },
     { name: "Contact", src: "/contact" },
   ];
 
+  useEffect(() => {
+    const handleScroll = () => {
+      console.log(window.scrollY);
+
+      if (window.scrollY > 10) {
+        setScrolled(true);
+      } else {
+        setScrolled(false);
+      }
+    };
+
+    window.addEventListener("scroll", handleScroll);
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
+
   return (
-    <div className=" bg-secondary-background w-full">
+    <div
+      className={cn(
+        "w-full sticky top-0 z-10 transition-all duration-700",
+        scrolled ? "bg-background border-b" : "bg-secondary-background",
+      )}
+    >
       <header className="flex items-center justify-between p-4 w-full lg:px-20">
         <div>
           <Link href={"/"} className="font-display text-2xl select-none">
