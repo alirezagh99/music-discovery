@@ -1,5 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { Headphones } from "lucide-react";
+import Link from "next/link";
 
 export const CTA = () => {
   return (
@@ -10,8 +11,10 @@ export const CTA = () => {
       <p className="text-xl lg:text-2xl font-bold font-display text-center">
         One tap. A few seconds. Thousands of songs waiting.
       </p>
-      <Button className="mt-4">
-        <Headphones /> Identify a Song
+      <Button asChild className="mt-4">
+        <Link href={"/discover"}>
+          <Headphones /> Identify a Song
+        </Link>
       </Button>
     </section>
   );

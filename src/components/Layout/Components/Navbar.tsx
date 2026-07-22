@@ -43,7 +43,10 @@ export const Navbar = () => {
     >
       <header className="flex items-center justify-between p-4 w-full lg:px-20">
         <div>
-          <Link href={"/"} className="font-display text-2xl select-none">
+          <Link
+            href={"/discover"}
+            className="font-display text-2xl select-none"
+          >
             MUSICOVERY
           </Link>
         </div>

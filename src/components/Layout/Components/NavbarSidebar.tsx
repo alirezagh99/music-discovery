@@ -40,9 +40,11 @@ export const NavbarSidebar = ({ items, open, onOpenChange }: Props) => {
             );
           })}
         </div>
-        <div className="flex justify-center items-center mx-4 mb-10">
+        <div className="flex justify-center items-center mx-4 mb-20">
           <Button asChild className={"w-full"}>
-            <Link href={"/discover"}>DISCOVER YOUR MUSIC</Link>
+            <Link onClick={() => onOpenChange(false)} href={"/discover"}>
+              DISCOVER YOUR MUSIC
+            </Link>
           </Button>
         </div>
       </SheetContent>

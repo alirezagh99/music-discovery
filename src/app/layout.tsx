@@ -16,7 +16,7 @@ const spaceGrotesk = Space_Grotesk({
 
 export const metadata: Metadata = {
   title: "Musicovery",
-  description: "Discovery Your Music",
+  description: "Find Your Music",
 };
 
 export default function RootLayout({
