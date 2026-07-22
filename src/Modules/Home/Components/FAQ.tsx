@@ -35,10 +35,10 @@ export const FAQ = () => {
         return (
           <Accordion key={index} type="single" collapsible className="w-full">
             <AccordionItem value="item-1">
-              <AccordionTrigger className="text-2xl font-display">
+              <AccordionTrigger className="text-xl lg:text-2xl font-display">
                 {item["question"]}
               </AccordionTrigger>
-              <AccordionContent className="text-lg">
+              <AccordionContent className="text-base lg:text-lg">
                 {item["answer"]}
               </AccordionContent>
             </AccordionItem>
