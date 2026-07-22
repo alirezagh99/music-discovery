@@ -42,7 +42,7 @@ export const HowWorks = () => {
   });
 
   return (
-    <section className="mt-32" ref={sectionRef}>
+    <section className="mt-10 lg:mt-32" ref={sectionRef}>
       <div className="relative h-[300vh]">
         <div className="top-24 sticky h-[80vh]">
           <SectionHeading text={"How Musicovery works"} />

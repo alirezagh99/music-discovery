@@ -16,7 +16,7 @@ export const Footer = () => {
   ];
 
   return (
-    <footer className="mt-32 border-t border-border p-4 bg-white">
+    <footer className="mt-10 lg:mt-32 border-t border-border p-4 bg-white">
       <div className="mt-10 container 2xl:max-w-360 mx-auto px-4 h-full grid grid-cols-6 gap-14 lg:gap-0">
         <div className="col-span-6 lg:col-span-2 flex flex-col items-center lg:items-start gap-4">
           <h3 className="font-display text-lg">Social Media</h3>

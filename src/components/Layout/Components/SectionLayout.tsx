@@ -13,7 +13,7 @@ export const SectionLayout = ({
   className?: string;
 }) => {
   return (
-    <section className={cn("mt-32", className)}>
+    <section className={cn("mt-10 lg:mt-32", className)}>
       <SectionHeading text={headingText} />
       {children}
     </section>

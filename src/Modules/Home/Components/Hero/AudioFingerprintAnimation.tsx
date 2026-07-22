@@ -12,15 +12,17 @@ export const AudioFingerprintAnimation = () => {
     import("p5").then((p5Module) => {
       const p5 = p5Module.default;
 
-      const sketch = (p: p5) => {
-        let paths = [];
+      const sketch = (p: any) => {
+        let paths: any = [];
         let framesBetweenParticles = 2;
         let nextParticleFrame = 0;
-        let previousParticlePosition: p5.Vector;
+        let previousParticlePosition: any;
         let particleFadeFrames = 400;
 
         p.setup = () => {
-          p.createCanvas(620, 620);
+          const width = containerRef.current!.clientWidth;
+          const height = containerRef.current!.clientHeight;
+          p.createCanvas(width, height);
           p.colorMode(p.HSB);
           previousParticlePosition = p.createVector(50, 50);
           paths.push(new Path());
@@ -58,7 +60,7 @@ export const AudioFingerprintAnimation = () => {
         function createParticle() {
           let x = p.frameCount;
 
-          let y = 300 + Math.sin(x * 0.05) * 100;
+          let y = p.height / 2 + Math.sin(x * 0.05) * 100;
 
           let position = p.createVector(x % p.width, y);
 
@@ -80,7 +82,7 @@ export const AudioFingerprintAnimation = () => {
             this.particles = [];
           }
 
-          addParticle(position, velocity) {
+          addParticle(position: any, velocity: any) {
             // Add a new particle with a position, velocity, and hue
             let particleHue = (5 * 30) % 360;
             console.log("particleHue:", particleHue);
@@ -95,7 +97,7 @@ export const AudioFingerprintAnimation = () => {
           }
 
           // Draw a line between two particles
-          connectParticles(particleA, particleB) {
+          connectParticles(particleA: any, particleB: any) {
             let opacity = particleA.framesRemaining / particleFadeFrames;
             p.stroke(255, opacity);
             p.line(
@@ -134,7 +136,7 @@ export const AudioFingerprintAnimation = () => {
         }
 
         class Particle {
-          constructor(position, velocity, hue) {
+          constructor(position: any, velocity: any, hue: any) {
             this.position = position.copy();
             this.velocity = velocity.copy();
             this.hue = hue;
@@ -172,6 +174,9 @@ export const AudioFingerprintAnimation = () => {
   }, []);
 
   return (
-    <div ref={containerRef} className="flex justify-center overflow-hidden" />
+    <div
+      ref={containerRef}
+      className="flex justify-center overflow-hidden h-[50vh]"
+    />
   );
 };
