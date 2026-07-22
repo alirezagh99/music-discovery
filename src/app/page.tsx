@@ -6,6 +6,7 @@ import { generateFingerprints } from "@/lib/generateFingerprints";
 import { decodeBlob } from "@/lib/decodeBlob";
 import { Hero } from "@/Modules/Home/Components/Hero";
 import { HowWorks } from "@/Modules/Home/Components/HowWorks";
+import { Why } from "@/Modules/Home/Components/Why";
 
 export default function Home() {
   const [audioUrl, setAudioUrl] = useState("");
@@ -80,7 +81,8 @@ export default function Home() {
   return (
     <div className={"flex flex-col gap-6 px-4 container 2xl:max-w-360 mx-auto"}>
       <Hero />
-      <HowWorks />
+      {/* <HowWorks /> */}
+      <Why />
       {/* <div className="flex flex-row items-center gap-4">
         <button onClick={() => startRecording()}>Start</button>
         <button onClick={() => handleStopButton()}>Stop</button>
