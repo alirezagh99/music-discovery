@@ -1,3 +1,4 @@
+import { AudioFingerprintAnimation } from "./Hero/AudioFingerprintAnimation";
 import { HeroText } from "./HeroText";
 
 export const Hero = () => {
@@ -6,7 +7,9 @@ export const Hero = () => {
       <div className="col-span-1">
         <HeroText />
       </div>
-      <div className="col-span-1 bg-gray-500 h-full">animation</div>
+      <div className="col-span-1 bg-background h-full">
+        <AudioFingerprintAnimation />
+      </div>
     </div>
   );
 };
