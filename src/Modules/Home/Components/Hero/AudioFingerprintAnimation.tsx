@@ -85,7 +85,6 @@ export const AudioFingerprintAnimation = () => {
           addParticle(position: any, velocity: any) {
             // Add a new particle with a position, velocity, and hue
             let particleHue = (5 * 30) % 360;
-            console.log("particleHue:", particleHue);
             this.particles.push(new Particle(position, velocity, particleHue));
           }
 
