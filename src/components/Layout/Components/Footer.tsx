@@ -47,8 +47,8 @@ export const Footer = () => {
           <div className="flex flex-col">
             {navigationItems.map((item, index) => {
               return (
-                <div>
-                  <Link className="inline" href={item.src} key={index}>
+                <div key={index}>
+                  <Link className="inline" href={item.src}>
                     {item.name}
                   </Link>
                 </div>
