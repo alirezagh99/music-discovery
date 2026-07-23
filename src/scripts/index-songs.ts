@@ -33,6 +33,7 @@ async function indexSongs() {
       })),
     });
 
+    console.log("fingerprints.length: ", fingerprints.length);
     console.log(`${file} indexed`);
   }
 

@@ -52,9 +52,10 @@ export function generatePeaks(audioBuffer: AudioBufferLike) {
       magnitudes.push(magnitude);
     }
 
+    // console.log("magnitudes:", magnitudes);
     const framePeaks: Peak[] = [];
 
-    const MIN_MAGNITUDE = 100;
+    const MIN_MAGNITUDE = 90;
 
     for (let i = 1; i < magnitudes.length - 1; i++) {
       if (
@@ -62,6 +63,7 @@ export function generatePeaks(audioBuffer: AudioBufferLike) {
         magnitudes[i] > magnitudes[i - 1] &&
         magnitudes[i] > magnitudes[i + 1]
       ) {
+        // console.log("magnitudes[i]:", magnitudes[i]);
         framePeaks.push({
           time: offset / SAMPLE_RATE,
 
@@ -72,6 +74,7 @@ export function generatePeaks(audioBuffer: AudioBufferLike) {
       }
     }
 
+    // console.log("framePeaks: ", framePeaks);
     framePeaks.sort((a, b) => b.magnitude - a.magnitude);
 
     peakMap.push(...framePeaks.slice(0, TOP_PEAKS_PER_FRAME));
