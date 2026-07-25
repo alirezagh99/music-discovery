@@ -38,7 +38,7 @@ export const Navbar = () => {
     <div
       className={cn(
         "w-full sticky top-0 z-10 transition-all duration-700",
-        scrolled ? "bg-background border-b" : "bg-secondary-background",
+        scrolled ? "bg-secondary-background" : "bg-background",
       )}
     >
       <header className="flex items-center justify-between p-4 w-full lg:px-20">

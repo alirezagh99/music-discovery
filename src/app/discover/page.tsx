@@ -11,11 +11,13 @@ import { Disc } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Player } from "@/Modules/Discover/Components/Player";
 import { PlayerBar } from "@/Modules/Discover/Components/PlayerBar";
+import { identifySong } from "@/actions/identifySong";
 
 const DiscoverPage = () => {
   const [audioUrl, setAudioUrl] = useState("");
   const [audioBlob, setAudioBlob] = useState<Blob | null>(null);
   const [recording, setRecording] = useState(false);
+  const [foundedSong, setFoundedSong] = useState({ title: null, error: null });
   const recorderRef = useRef<MediaRecorder | null>(null);
   const streamRef = useRef<MediaStream | null>(null);
   const stopTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
@@ -24,6 +26,11 @@ const DiscoverPage = () => {
     // if resolved, returns a MediaStream object
     const stream = await navigator.mediaDevices.getUserMedia({
       audio: true,
+      // audio: {
+      //   echoCancellation: false,
+      //   noiseSuppression: false,
+      //   autoGainControl: false,
+      // },
     });
     setRecording(true);
     streamRef.current = stream;
@@ -90,15 +97,18 @@ const DiscoverPage = () => {
         (_, i) => audioBuffer.getChannelData(i),
       ),
     };
+    // console.log({ audioBufferLike });
 
-    console.log("audioBufferLike: ", audioBufferLike);
     const peaks = generatePeaks(audioBufferLike);
 
-    // console.log("peaks: ", peaks);
     const fingerprints = generateFingerprints(peaks);
 
-    // console.log("fingerprints: ", fingerprints);
-    console.log("fingerprints: ", fingerprints.length);
+    console.log({ fingerprints });
+    const result = await identifySong(fingerprints);
+
+    // console.log({ result });
+
+    setFoundedSong(result);
   };
 
   return (
@@ -137,8 +147,12 @@ const DiscoverPage = () => {
           </Button>
         </motion.div>
         <div>
-          {recording && (
-            <Button variant={"noShadow"} onClick={() => stopRecording()}>
+          {!recording && (
+            <Button
+              className="border"
+              variant={"neutralNoShadow"}
+              onClick={() => stopRecording()}
+            >
               Stop Recording
             </Button>
           )}
@@ -146,7 +160,17 @@ const DiscoverPage = () => {
 
         {/* <Button onClick={() => handleVisualization()}>Visualization</Button> */}
       </div>
-      <div>{audioUrl && <audio controls src={audioUrl} />}</div>
+
+      {foundedSong.title ? (
+        <div className="flex justify-center mt-10">
+          <p className="text-xl">
+            Found it! The song's name is {foundedSong.title}
+          </p>
+        </div>
+      ) : foundedSong.error ? (
+        <p className="text-xl">{`Not Found :(`}</p>
+      ) : null}
+      {/* <div>{audioUrl && <audio controls src={audioUrl} />}</div> */}
       {/* <div className="h-25 flex items-center justify-center">
         <Player />
       </div> */}

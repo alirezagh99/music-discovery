@@ -8,7 +8,10 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
-    "index:songs": "tsx src/scripts/index-songs.ts"
+    "index:songs": "tsx src/scripts/index-songs.ts",
+    "find:fingerprints": "tsx src/scripts/findFingerprints.ts",
+    "find:each": "tsx src/scripts/find-each-song.ts",
+    "get:one": "tsx src/scripts/get-one-fp.ts"
   },
   "dependencies": {
     "@base-ui/react": "^1.6.0",
