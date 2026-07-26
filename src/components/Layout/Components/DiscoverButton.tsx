@@ -5,7 +5,7 @@ import Link from "next/link";
 export const DiscoverButton = ({ className }: { className?: string }) => {
   return (
     <Button asChild className={cn("", className)}>
-      <Link href={"/discover"}>DISCOVER</Link>
+      <Link href={"/discover"}>FIND SONG</Link>
     </Button>
   );
 };

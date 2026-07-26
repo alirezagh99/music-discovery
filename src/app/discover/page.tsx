@@ -17,6 +17,7 @@ const DiscoverPage = () => {
   const [audioUrl, setAudioUrl] = useState("");
   const [audioBlob, setAudioBlob] = useState<Blob | null>(null);
   const [recording, setRecording] = useState(false);
+  const [loading, setLoading] = useState(false);
   const [foundedSong, setFoundedSong] = useState({ title: null, error: null });
   const recorderRef = useRef<MediaRecorder | null>(null);
   const streamRef = useRef<MediaStream | null>(null);
@@ -47,6 +48,7 @@ const DiscoverPage = () => {
     };
 
     recorder.onstop = () => {
+      setLoading(true);
       if (stopTimeoutRef.current) {
         clearTimeout(stopTimeoutRef.current);
         stopTimeoutRef.current = null;
@@ -97,7 +99,6 @@ const DiscoverPage = () => {
         (_, i) => audioBuffer.getChannelData(i),
       ),
     };
-    // console.log({ audioBufferLike });
 
     const peaks = generatePeaks(audioBufferLike);
 
@@ -106,8 +107,7 @@ const DiscoverPage = () => {
     console.log({ fingerprints });
     const result = await identifySong(fingerprints);
 
-    // console.log({ result });
-
+    setLoading(false);
     setFoundedSong(result);
   };
 
@@ -142,12 +142,18 @@ const DiscoverPage = () => {
             onClick={startRecording}
             className="min-w-44 flex items-center gap-2"
           >
-            <span>{recording ? "Recording" : "Start Recording"}</span>
+            <span>
+              {recording
+                ? "Recording"
+                : loading
+                  ? "Finding the song..."
+                  : "Start Recording"}
+            </span>
             <Disc className={cn("mt-0.5", recording ? "text-red-500" : "")} />
           </Button>
         </motion.div>
         <div>
-          {!recording && (
+          {recording && (
             <Button
               className="border"
               variant={"neutralNoShadow"}
@@ -157,18 +163,20 @@ const DiscoverPage = () => {
             </Button>
           )}
         </div>
-
-        {/* <Button onClick={() => handleVisualization()}>Visualization</Button> */}
       </div>
 
       {foundedSong.title ? (
         <div className="flex justify-center mt-10">
-          <p className="text-xl">
+          <p className="text-xl bg-white border rounded-base px-4 py-2">
             Found it! The song's name is {foundedSong.title}
           </p>
         </div>
       ) : foundedSong.error ? (
-        <p className="text-xl">{`Not Found :(`}</p>
+        <div className="flex justify-center mt-10">
+          <p className="text-xl bg-white border rounded-base px-4 py-2">
+            Unfortunately we couldn't find your song, please record again.
+          </p>
+        </div>
       ) : null}
       {/* <div>{audioUrl && <audio controls src={audioUrl} />}</div> */}
       {/* <div className="h-25 flex items-center justify-center">

@@ -1,0 +1,7 @@
+export default function ContactLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
+  return <div className="px-4 container 2xl:max-w-360 mx-auto">{children}</div>;
+}

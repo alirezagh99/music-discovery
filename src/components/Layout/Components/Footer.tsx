@@ -60,7 +60,7 @@ export const Footer = () => {
           <Link href={"/"} className="font-display text-2xl select-none">
             MUSICOVERY
           </Link>
-          <p className="text-sm">Discovery Your Music</p>
+          <p className="text-sm">Discover Your Music</p>
         </div>
       </div>
     </footer>

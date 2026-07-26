@@ -13,7 +13,7 @@ export const CTA = () => {
       </p>
       <Button asChild className="mt-4">
         <Link href={"/discover"}>
-          <Headphones /> Identify a Song
+          <Headphones /> Find This Song
         </Link>
       </Button>
     </section>

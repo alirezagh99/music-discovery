@@ -8,11 +8,12 @@ import { Button } from "@/components/ui/button";
 import { MenuIcon } from "lucide-react";
 import { useEffect, useState } from "react";
 import { cn } from "@/lib/utils";
+import { usePathname } from "next/navigation";
 
 export const Navbar = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const pathname = usePathname();
   const [scrolled, setScrolled] = useState(false);
-
   const navbarItems = [
     { name: "About", src: "/about" },
     { name: "Contact", src: "/contact" },
@@ -43,10 +44,7 @@ export const Navbar = () => {
     >
       <header className="flex items-center justify-between p-4 w-full lg:px-20">
         <div>
-          <Link
-            href={"/discover"}
-            className="font-display text-2xl select-none"
-          >
+          <Link href={"/"} className="font-display text-2xl select-none">
             MUSICOVERY
           </Link>
         </div>
@@ -55,14 +53,16 @@ export const Navbar = () => {
         </div>
         <div className="lg:hidden">
           <NavbarSidebar
+            pathname={pathname}
             items={navbarItems}
             open={isSidebarOpen}
             onOpenChange={setIsSidebarOpen}
           />
         </div>
-        <div className="hidden lg:block">
-          <DiscoverButton />
+        <div className="hidden lg:block min-w-26.5">
+          {pathname !== "/discover" && <DiscoverButton />}
         </div>
+
         <div className="flex lg:hidden items-center justify-center">
           <Button
             onClick={() => setIsSidebarOpen(true)}
