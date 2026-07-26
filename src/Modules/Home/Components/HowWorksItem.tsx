@@ -19,20 +19,20 @@ export const HowWorksItem = ({
   const color = useTransform(
     progress,
     [trigger - 0.05, trigger],
-    ["#9ca3af", "#4f4007"],
+    ["#2c2e31", "#211b03"],
   );
 
   const backgroundColor = useTransform(
     progress,
     [trigger - 0.05, trigger],
-    ["#ffffff", "#ffd93d"],
+    ["#ffffff", "#ffd52b"],
   );
 
   const scale = useTransform(progress, [trigger - 0.04, trigger], [1, 1.06]);
 
   const opacity = useTransform(progress, [trigger - 0.04, trigger], [0.55, 1]);
   return (
-    <div className={cn("mt-12", id % 2 && "text-end", className)}>
+    <div className={cn("mt-10 lg:mt-12", id % 2 && "text-end", className)}>
       <motion.div
         style={{
           backgroundColor,
@@ -50,6 +50,7 @@ export const HowWorksItem = ({
       py-5
       shadow-[4px_4px_0px_#111]
       will-change-transform
+      w-full lg:w-100
       lg:min-w-100 text-center
     "
       >
@@ -60,7 +61,7 @@ export const HowWorksItem = ({
         <motion.h3
           style={{ color }}
           className="
-        text-3xl
+        text-xl lg:text-3xl
         font-black
         uppercase
         leading-none

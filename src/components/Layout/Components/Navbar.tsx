@@ -8,11 +8,12 @@ import { Button } from "@/components/ui/button";
 import { MenuIcon } from "lucide-react";
 import { useEffect, useState } from "react";
 import { cn } from "@/lib/utils";
+import { usePathname } from "next/navigation";
 
 export const Navbar = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const pathname = usePathname();
   const [scrolled, setScrolled] = useState(false);
-
   const navbarItems = [
     { name: "About", src: "/about" },
     { name: "Contact", src: "/contact" },
@@ -20,8 +21,6 @@ export const Navbar = () => {
 
   useEffect(() => {
     const handleScroll = () => {
-      console.log(window.scrollY);
-
       if (window.scrollY > 10) {
         setScrolled(true);
       } else {
@@ -40,7 +39,7 @@ export const Navbar = () => {
     <div
       className={cn(
         "w-full sticky top-0 z-10 transition-all duration-700",
-        scrolled ? "bg-background border-b" : "bg-secondary-background",
+        scrolled ? "bg-secondary-background" : "bg-background",
       )}
     >
       <header className="flex items-center justify-between p-4 w-full lg:px-20">
@@ -54,14 +53,16 @@ export const Navbar = () => {
         </div>
         <div className="lg:hidden">
           <NavbarSidebar
+            pathname={pathname}
             items={navbarItems}
             open={isSidebarOpen}
             onOpenChange={setIsSidebarOpen}
           />
         </div>
-        <div className="hidden lg:block">
-          <DiscoverButton />
+        <div className="hidden lg:block min-w-26.5">
+          {pathname !== "/discover" && <DiscoverButton />}
         </div>
+
         <div className="flex lg:hidden items-center justify-center">
           <Button
             onClick={() => setIsSidebarOpen(true)}

@@ -42,7 +42,7 @@ export const HowWorks = () => {
   });
 
   return (
-    <section className="mt-32" ref={sectionRef}>
+    <section className="mt-10 lg:mt-32" ref={sectionRef}>
       <div className="relative h-[300vh]">
         <div className="top-24 sticky h-[80vh]">
           <SectionHeading text={"How Musicovery works"} />
@@ -68,21 +68,21 @@ export const HowWorks = () => {
             start={0.1}
             end={0.4}
             progress={scrollYProgress}
-            className="absolute top-0 left-[47%] -translate-y-14 rotate-100"
+            className="absolute top-0 left-[47%] -translate-y-14 rotate-100 hidden lg:block"
           />
 
           <WaveformProgress
             start={0.4}
             end={0.6}
             progress={scrollYProgress}
-            className="absolute top-0 left-[47%] translate-y-20 rotate-[-100deg]"
+            className="absolute top-0 left-[47%] translate-y-20 rotate-[-100deg] hidden lg:block"
           />
 
           <WaveformProgress
             start={0.6}
             end={0.9}
             progress={scrollYProgress}
-            className="absolute top-0 left-[47%] translate-y-56 rotate-100"
+            className="absolute top-0 left-[47%] translate-y-56 rotate-100 hidden lg:block"
           />
         </div>
       </div>

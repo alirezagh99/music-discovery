@@ -16,9 +16,15 @@ interface Props {
   items: any[];
   open: boolean;
   onOpenChange: (open: boolean) => void;
+  pathname: string;
 }
 
-export const NavbarSidebar = ({ items, open, onOpenChange }: Props) => {
+export const NavbarSidebar = ({
+  items,
+  open,
+  onOpenChange,
+  pathname,
+}: Props) => {
   return (
     <Sheet open={open} onOpenChange={onOpenChange}>
       <SheetContent side="left" className="p-0  bg-background">
@@ -40,11 +46,15 @@ export const NavbarSidebar = ({ items, open, onOpenChange }: Props) => {
             );
           })}
         </div>
-        <div className="flex justify-center items-center mx-4 mb-10">
-          <Button asChild className={"w-full"}>
-            <Link href={"/discover"}>DISCOVER YOUR MUSIC</Link>
-          </Button>
-        </div>
+        {pathname !== "/discover" && (
+          <div className="flex justify-center items-center mx-4 mb-20">
+            <Button asChild className={"w-full"}>
+              <Link onClick={() => onOpenChange(false)} href={"/discover"}>
+                FIND SONG
+              </Link>
+            </Button>
+          </div>
+        )}
       </SheetContent>
     </Sheet>
   );

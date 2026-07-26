@@ -32,5 +32,5 @@ model Fingerprint {
   songId    Int
   song      Song @relation(fields: [songId],references: [id])
 
-  @@index([hash])
+@@index([hash, songId, offset])
 }
