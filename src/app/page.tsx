@@ -7,7 +7,9 @@ import { faqSchema } from "@/lib/seo/faq-schema";
 
 export default function Home() {
   return (
-    <div className={"flex flex-col gap-6 px-4 container 2xl:max-w-360 mx-auto"}>
+    <main
+      className={"flex flex-col gap-6 px-4 container 2xl:max-w-360 mx-auto"}
+    >
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{
@@ -20,6 +22,6 @@ export default function Home() {
       <Why />
       <FAQ />
       <CTA />
-    </div>
+    </main>
   );
 }

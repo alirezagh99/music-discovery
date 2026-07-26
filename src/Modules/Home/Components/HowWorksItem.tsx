@@ -19,13 +19,13 @@ export const HowWorksItem = ({
   const color = useTransform(
     progress,
     [trigger - 0.05, trigger],
-    ["#9ca3af", "#4f4007"],
+    ["#2c2e31", "#211b03"],
   );
 
   const backgroundColor = useTransform(
     progress,
     [trigger - 0.05, trigger],
-    ["#ffffff", "#ffd93d"],
+    ["#ffffff", "#ffd52b"],
   );
 
   const scale = useTransform(progress, [trigger - 0.04, trigger], [1, 1.06]);

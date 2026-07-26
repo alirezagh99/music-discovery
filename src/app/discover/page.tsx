@@ -1,6 +1,6 @@
 "use client";
 
-import { AnimatePresence, motion } from "motion/react";
+import { motion } from "motion/react";
 import { useRef, useState } from "react";
 import { generatePeaks } from "@/lib/generatePeaks";
 import { generateFingerprints } from "@/lib/generateFingerprints";
@@ -9,16 +9,24 @@ import { Button } from "@/components/ui/button";
 import { SectionLayout } from "@/components/Layout/Components/SectionLayout";
 import { Disc } from "lucide-react";
 import { cn } from "@/lib/utils";
-import { Player } from "@/Modules/Discover/Components/Player";
-import { PlayerBar } from "@/Modules/Discover/Components/PlayerBar";
 import { identifySong } from "@/actions/identifySong";
 
+type FoundedSong = {
+  title: string | null;
+  error: string | null;
+  id: number | null;
+};
+
 const DiscoverPage = () => {
-  const [audioUrl, setAudioUrl] = useState("");
-  const [audioBlob, setAudioBlob] = useState<Blob | null>(null);
+  // const [audioUrl, setAudioUrl] = useState("");
+  // const [audioBlob, setAudioBlob] = useState<Blob | null>(null);
   const [recording, setRecording] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [foundedSong, setFoundedSong] = useState({ title: null, error: null });
+  const [foundedSong, setFoundedSong] = useState<FoundedSong>({
+    title: null,
+    error: null,
+    id: null,
+  });
   const recorderRef = useRef<MediaRecorder | null>(null);
   const streamRef = useRef<MediaStream | null>(null);
   const stopTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
@@ -58,10 +66,10 @@ const DiscoverPage = () => {
         type: "audio/webm",
       });
 
-      setAudioBlob(blob);
+      // setAudioBlob(blob);
 
       const url = URL.createObjectURL(blob);
-      setAudioUrl(url);
+      // setAudioUrl(url);
       setRecording(false);
 
       handleVisualization(blob);

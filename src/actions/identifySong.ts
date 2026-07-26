@@ -3,7 +3,15 @@
 import { prisma } from "@/lib/prisma";
 import type { Fingerprint } from "@/lib/types";
 
-export async function identifySong(fingerprints: Fingerprint[]) {
+type ResultProp = {
+  title: string | null;
+  error: string | null;
+  id: number | null;
+};
+
+export async function identifySong(
+  fingerprints: Fingerprint[],
+): Promise<ResultProp> {
   const hashes = fingerprints.map((fp) => fp.hash);
 
   const matches = await prisma.fingerprint.findMany({
@@ -47,7 +55,7 @@ export async function identifySong(fingerprints: Fingerprint[]) {
   }
 
   if (!bestKey) {
-    return { title: null, error: "not found" }; // No matches found
+    return { title: null, error: "not found", id: null }; // No matches found
   }
 
   const [songIdString, bucketString] = bestKey.split("-");
@@ -61,5 +69,5 @@ export async function identifySong(fingerprints: Fingerprint[]) {
     },
   });
 
-  return song;
+  return { title: song?.title ?? null, id: song?.id ?? null, error: null };
 }

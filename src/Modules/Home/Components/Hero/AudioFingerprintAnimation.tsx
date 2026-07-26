@@ -1,181 +1,208 @@
-"use client";
+// "use client";
 
-import { useEffect, useRef } from "react";
-// import p5 from "p5";
+// import { useEffect, useRef } from "react";
+// // import p5 from "p5";
 
-export const AudioFingerprintAnimation = () => {
-  const containerRef = useRef<HTMLDivElement>(null);
+// export const AudioFingerprintAnimation = () => {
+//   const containerRef = useRef<HTMLDivElement>(null);
 
-  useEffect(() => {
-    if (!containerRef.current) return;
+//   useEffect(() => {
+//     if (!containerRef.current) return;
 
-    import("p5").then((p5Module) => {
-      const p5 = p5Module.default;
+//     import("p5").then((p5Module) => {
+//       const p5 = p5Module.default;
 
-      const sketch = (p: any) => {
-        let paths: any = [];
-        let framesBetweenParticles = 2;
-        let nextParticleFrame = 0;
-        let previousParticlePosition: any;
-        let particleFadeFrames = 400;
+//       const sketch = (p: any) => {
+//         // let paths: any = [];
+//         let particles: Particle[] = [];
+//         let framesBetweenParticles = 3;
+//         let nextParticleFrame = 0;
+//         let previousParticlePosition: any;
+//         let particleFadeFrames = 120;
 
-        p.setup = () => {
-          const width = containerRef.current!.clientWidth;
-          const height = containerRef.current!.clientHeight;
-          p.createCanvas(width, height);
-          p.colorMode(p.HSB);
-          previousParticlePosition = p.createVector(50, 50);
-          paths.push(new Path());
-          createParticle();
-        };
+//         p.setup = () => {
+//           p.pixelDensity(1);
 
-        p.draw = () => {
-          p.background("#fffbe6");
+//           const width = containerRef.current!.clientWidth;
+//           const height = containerRef.current!.clientHeight;
+//           p.createCanvas(width, height);
 
-          if (p.frameCount >= nextParticleFrame) {
-            createParticle();
-          }
-          for (let path of paths) {
-            path.update();
-            path.display();
-          }
-        };
+//           p.windowResized = () => {
+//             p.resizeCanvas(
+//               containerRef.current!.clientWidth,
+//               containerRef.current!.clientHeight,
+//             );
+//           };
 
-        //   p.mousePressed = () => {
-        //     nextParticleFrame = p.frameCount;
+//           // changed frame rate default 60 to 30
+//           p.frameRate(30);
 
-        //     paths.push(new Path());
+//           p.colorMode(p.HSB);
+//           previousParticlePosition = p.createVector(50, 50);
+//           // paths.push(new Path());
+//           // createParticle();
+//           createParticle();
+//         };
 
-        //     previousParticlePosition.set(p.mouseX, p.mouseY);
+//         p.draw = () => {
+//           p.background("#fffbe6");
 
-        //     createParticle();
-        //   };
+//           if (p.frameCount >= nextParticleFrame) {
+//             createParticle();
+//           }
+//           for (let i = particles.length - 1; i >= 0; i--) {
+//             const particle = particles[i];
 
-        //   p.mouseDragged = () => {
-        //     if (p.frameCount >= nextParticleFrame) {
-        //       createParticle();
-        //     }
-        //   };
+//             particle.update();
 
-        function createParticle() {
-          let x = p.frameCount;
+//             if (particle.framesRemaining <= 0) {
+//               particles.splice(i, 1);
+//             } else {
+//               particle.display();
+//             }
+//           }
+//         };
 
-          let y = p.height / 2 + Math.sin(x * 0.05) * 100;
+//         function createParticle() {
+//           let x = p.frameCount;
 
-          let position = p.createVector(x % p.width, y);
+//           let y = p.height / 2 + Math.sin(x * 0.05) * 100;
 
-          let velocity = p5.Vector.sub(position, previousParticlePosition);
+//           let position = p.createVector(x % p.width, y);
 
-          velocity.mult(0.05);
+//           let velocity = p5.Vector.sub(position, previousParticlePosition);
 
-          let lastPath = paths[paths.length - 1];
+//           velocity.mult(0.05);
 
-          lastPath.addParticle(position, velocity);
+//           // let lastPath = paths[paths.length - 1];
 
-          nextParticleFrame = p.frameCount + framesBetweenParticles;
+//           // lastPath.addParticle(position, velocity);
 
-          previousParticlePosition.set(position.x, position.y);
-        }
+//           particles.push(new Particle(position, velocity, (5 * 30) % 360));
 
-        class Path {
-          constructor() {
-            this.particles = [];
-          }
+//           nextParticleFrame = p.frameCount + framesBetweenParticles;
 
-          addParticle(position: any, velocity: any) {
-            // Add a new particle with a position, velocity, and hue
-            let particleHue = (5 * 30) % 360;
-            this.particles.push(new Particle(position, velocity, particleHue));
-          }
+//           previousParticlePosition.set(position.x, position.y);
+//         }
 
-          // Update all particles
-          update() {
-            for (let particle of this.particles) {
-              particle.update();
-            }
-          }
+//         // class Path {
+//         //   constructor() {
+//         //     this.particles = [];
+//         //   }
 
-          // Draw a line between two particles
-          connectParticles(particleA: any, particleB: any) {
-            let opacity = particleA.framesRemaining / particleFadeFrames;
-            p.stroke(255, opacity);
-            p.line(
-              particleA.position.x,
-              particleA.position.y,
-              particleB.position.x,
-              particleB.position.y,
-            );
-          }
+//         //   addParticle(position: any, velocity: any) {
+//         //     // Add a new particle with a position, velocity, and hue
+//         //     let particleHue = (5 * 30) % 360;
+//         //     this.particles.push(new Particle(position, velocity, particleHue));
+//         //   }
 
-          // Display path
-          display() {
-            // Loop through backwards so that when a particle is removed,
-            // the index number for the next loop will match up with the
-            // particle before the removed one
-            for (let i = this.particles.length - 1; i >= 0; i -= 1) {
-              // Remove this particle if it has no frames remaining
-              if (this.particles[i].framesRemaining <= 0) {
-                this.particles.splice(i, 1);
+//         //   // Update all particles
+//         //   update() {
+//         //     for (let particle of this.particles) {
+//         //       particle.update();
+//         //     }
+//         //   }
 
-                // Otherwise, display it
-              } else {
-                this.particles[i].display();
+//         //   // Draw a line between two particles
+//         //   connectParticles(particleA: any, particleB: any) {
+//         //     let opacity = particleA.framesRemaining / particleFadeFrames;
+//         //     p.stroke(255, opacity);
+//         //     p.line(
+//         //       particleA.position.x,
+//         //       particleA.position.y,
+//         //       particleB.position.x,
+//         //       particleB.position.y,
+//         //     );
+//         //   }
 
-                // If there is a particle after this one
-                if (i < this.particles.length - 1) {
-                  // Connect them with a line
-                  this.connectParticles(
-                    this.particles[i],
-                    this.particles[i + 1],
-                  );
-                }
-              }
-            }
-          }
-        }
+//         //   // Display path
+//         //   display() {
+//         //     while (this.particles.length > 100) {
+//         //       this.particles.shift();
+//         //     }
+//         //     // Loop through backwards so that when a particle is removed,
+//         //     // the index number for the next loop will match up with the
+//         //     // particle before the removed one
+//         //     for (let i = this.particles.length - 1; i >= 0; i -= 1) {
+//         //       // Remove this particle if it has no frames remaining
+//         //       if (this.particles[i].framesRemaining <= 0) {
+//         //         this.particles.splice(i, 1);
 
-        class Particle {
-          constructor(position: any, velocity: any, hue: any) {
-            this.position = position.copy();
-            this.velocity = velocity.copy();
-            this.hue = hue;
-            this.drag = 0.95;
-            this.framesRemaining = particleFadeFrames;
-          }
+//         //         // Otherwise, display it
+//         //       } else {
+//         //         this.particles[i].display();
 
-          update() {
-            // Move it
-            this.position.add(this.velocity);
+//         //         // If there is a particle after this one
+//         //         if (i < this.particles.length - 1) {
+//         //           // Connect them with a line
+//         //           this.connectParticles(
+//         //             this.particles[i],
+//         //             this.particles[i + 1],
+//         //           );
+//         //         }
+//         //       }
+//         //     }
+//         //   }
+//         // }
 
-            // Slow it down
-            this.velocity.mult(this.drag);
+//         class Particle {
+//           position: any;
+//           velocity: any;
+//           hue: number;
+//           drag = 0.95;
+//           framesRemaining = particleFadeFrames;
 
-            // Fade it out
-            this.framesRemaining = this.framesRemaining - 1;
-          }
+//           constructor(position: any, velocity: any, hue: number) {
+//             this.position = position.copy();
+//             this.velocity = velocity.copy();
+//             this.hue = hue;
+//           }
 
-          // Draw particle
-          display() {
-            let opacity = this.framesRemaining / particleFadeFrames;
-            p.noStroke();
-            p.fill(this.hue, 80, 90, opacity);
-            p.circle(this.position.x, this.position.y, 5);
-          }
-        }
-      };
+//           update() {
+//             this.position.add(this.velocity);
+//             this.velocity.mult(this.drag);
+//             this.framesRemaining--;
+//           }
 
-      const canvas = new p5(sketch, containerRef.current);
+//           display() {
+//             const opacity = this.framesRemaining / particleFadeFrames;
 
-      return () => {
-        canvas.remove();
-      };
-    });
-  }, []);
+//             p.noStroke();
+//             p.fill(this.hue, 80, 90, opacity);
 
-  return (
-    <div
-      ref={containerRef}
-      className="flex justify-center overflow-hidden h-[50vh]"
-    />
-  );
-};
+//             p.circle(this.position.x, this.position.y, 5);
+//           }
+//         }
+//       };
+
+//       const canvas = new p5(sketch, containerRef.current);
+
+//       const observer = new IntersectionObserver(
+//         ([entry]) => {
+//           if (entry.isIntersecting) {
+//             canvas.loop();
+//           } else {
+//             canvas.noLoop();
+//           }
+//         },
+//         {
+//           threshold: 0.1,
+//         },
+//       );
+
+//       observer.observe(containerRef.current);
+
+//       return () => {
+//         observer.disconnect();
+//         canvas.remove();
+//       };
+//     });
+//   }, []);
+
+//   return (
+//     <div
+//       ref={containerRef}
+//       className="flex justify-center overflow-hidden h-[50vh]"
+//     />
+//   );
+// };

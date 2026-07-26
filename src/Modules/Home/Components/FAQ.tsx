@@ -36,7 +36,7 @@ export const FAQ = () => {
           <Accordion key={index} type="single" collapsible className="w-full">
             <AccordionItem value="item-1">
               <AccordionTrigger className="text-xl lg:text-2xl font-display">
-                {item["question"]}
+                <h3>{item["question"]}</h3>
               </AccordionTrigger>
               <AccordionContent className="text-base lg:text-lg">
                 {item["answer"]}
