@@ -16,14 +16,14 @@ async function findFingerprints(hash: string) {
   fingerprints.forEach((fp) => {
     console.log(`${fp.id} - ${fp.hash} - song${fp.songId}`);
   });
-  //   console.log(`Found ${fingerprints.length} fingerprints`);
-  //   console.log(`609-609-4`);
+  console.log(`Found ${fingerprints.length} fingerprints`);
+  console.log(`689-581-19`);
 
-  //   console.log(fingerprints);
+  console.log(fingerprints);
 }
 
 async function main() {
-  const hash = "609-609-4";
+  const hash = "689-581-19";
 
   await findFingerprints(hash);
 }
