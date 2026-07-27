@@ -61,7 +61,7 @@ export const HowWorksItem = ({
         <motion.h3
           style={{ color }}
           className="
-        text-xl lg:text-3xl
+        text-lg lg:text-3xl
         font-black
         uppercase
         leading-none

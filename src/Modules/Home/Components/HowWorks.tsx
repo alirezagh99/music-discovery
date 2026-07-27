@@ -68,21 +68,21 @@ export const HowWorks = () => {
             start={0.1}
             end={0.4}
             progress={scrollYProgress}
-            className="absolute top-0 left-[47%] -translate-y-14 rotate-100 hidden lg:block"
+            className="absolute top-0 left-[47%] -translate-y-14 rotate-100 hidden xl:block"
           />
 
           <WaveformProgress
             start={0.4}
             end={0.6}
             progress={scrollYProgress}
-            className="absolute top-0 left-[47%] translate-y-20 rotate-[-100deg] hidden lg:block"
+            className="absolute top-0 left-[47%] translate-y-20 rotate-[-100deg] hidden xl:block"
           />
 
           <WaveformProgress
             start={0.6}
             end={0.9}
             progress={scrollYProgress}
-            className="absolute top-0 left-[47%] translate-y-56 rotate-100 hidden lg:block"
+            className="absolute top-0 left-[47%] translate-y-56 rotate-100 hidden xl:block"
           />
         </div>
       </div>

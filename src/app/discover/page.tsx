@@ -110,6 +110,7 @@ const DiscoverPage = () => {
 
     const peaks = generatePeaks(audioBufferLike);
 
+    console.log({ peaks });
     const fingerprints = generateFingerprints(peaks);
 
     console.log({ fingerprints });
@@ -121,7 +122,7 @@ const DiscoverPage = () => {
 
   return (
     <SectionLayout
-      headingText="Record your sound to find the song"
+      headingText="Let Musicovery identify the song"
       className="relative lg:h-[60vh]"
     >
       <div className="flex flex-row items-start justify-center w-1/2 mx-auto gap-4 mt-10">

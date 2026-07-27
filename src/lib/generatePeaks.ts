@@ -55,7 +55,9 @@ export function generatePeaks(audioBuffer: AudioBufferLike) {
 
     const framePeaks: Peak[] = [];
 
-    const MIN_MAGNITUDE = 90;
+    // const MIN_MAGNITUDE = 90;
+    const maxMagnitude = Math.max(...magnitudes);
+    const MIN_MAGNITUDE = maxMagnitude * 0.5;
 
     for (let i = 1; i < magnitudes.length - 1; i++) {
       if (

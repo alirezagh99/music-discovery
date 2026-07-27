@@ -6,9 +6,15 @@ function createLandmarks(peaks: Peak[]) {
 
   const landmarks = [];
 
-  const TARGET_ZONE = 1;
+  const TARGET_ZONE = 2;
 
   const MAX_TARGETS = 5;
+
+  const MAX_FREQ_DISTANCE = 200;
+
+  const MIN_TARGET_TIME = 0.05;
+
+  // const sortedPeaks = peaks.sort((a, b) => b.magnitude - a.magnitude);
 
   for (let i = 0; i < peaks.length; i++) {
     const peak1 = peaks[i];
@@ -21,9 +27,16 @@ function createLandmarks(peaks: Peak[]) {
       const peak2 = peaks[j];
 
       const deltaTime = peak2.time - peak1.time;
+      const deltaFreq = Math.abs(peak2.frequency - peak1.frequency);
 
       if (deltaTime > TARGET_ZONE) {
         break;
+      }
+      if (deltaFreq > MAX_FREQ_DISTANCE) {
+        continue;
+      }
+      if (deltaTime < MIN_TARGET_TIME) {
+        continue;
       }
 
       landmarks.push({
