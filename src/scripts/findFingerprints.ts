@@ -13,7 +13,7 @@ async function findFingerprints(hash: string) {
     },
   });
 
-  fingerprints.forEach((fp) => {
+  fingerprints.forEach((fp: any) => {
     console.log(`${fp.id} - ${fp.hash} - song${fp.songId}`);
   });
   console.log(`Found ${fingerprints.length} fingerprints`);
