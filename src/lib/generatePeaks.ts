@@ -20,7 +20,7 @@ export function generatePeaks(audioBuffer: AudioBufferLike) {
   const samples = audioBuffer.channelData[0];
 
   const SAMPLE_RATE = audioBuffer.sampleRate;
-  console.log("SAMPLE_RATE: ", SAMPLE_RATE);
+  // console.log("SAMPLE_RATE: ", SAMPLE_RATE);
 
   const WINDOW_SIZE = 2048;
 
