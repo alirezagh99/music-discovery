@@ -31,6 +31,9 @@ const DiscoverPage = () => {
   const streamRef = useRef<MediaStream | null>(null);
   const stopTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
+  console.log("loading: ", loading);
+  console.log("foundedSong: ", foundedSong);
+
   async function startRecording() {
     // if resolved, returns a MediaStream object
     const stream = await navigator.mediaDevices.getUserMedia({
@@ -110,10 +113,10 @@ const DiscoverPage = () => {
 
     const peaks = generatePeaks(audioBufferLike);
 
-    console.log({ peaks });
+    // console.log({ peaks });
     const fingerprints = generateFingerprints(peaks);
 
-    console.log({ fingerprints });
+    // console.log({ fingerprints });
     const result = await identifySong(fingerprints);
 
     setLoading(false);
@@ -123,7 +126,7 @@ const DiscoverPage = () => {
   return (
     <SectionLayout
       headingText="Let Musicovery identify the song"
-      className="relative lg:h-[60vh]"
+      className="relative h-[60vh]"
     >
       <div className="flex flex-row items-start justify-center w-1/2 mx-auto gap-4 mt-10">
         <motion.div
@@ -176,8 +179,8 @@ const DiscoverPage = () => {
 
       {foundedSong.title ? (
         <div className="flex justify-center mt-10">
-          <p className="text-xl bg-white border rounded-base px-4 py-2">
-            Found it! The song's name is {foundedSong.title}
+          <p className="text-base lg:text-xl bg-white border rounded-base px-4 py-2">
+            Found it! The song's title is {foundedSong.title.split(".")[0]}
           </p>
         </div>
       ) : foundedSong.error ? (
