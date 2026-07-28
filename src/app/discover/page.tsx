@@ -125,7 +125,7 @@ const DiscoverPage = () => {
 
   return (
     <SectionLayout
-      headingText="Let Musicovery identify the song"
+      headingText="Let Musicovery Identify the Song"
       className="relative h-[60vh]"
     >
       <div className="flex flex-row items-start justify-center w-1/2 mx-auto gap-4 mt-10">
