@@ -44,7 +44,7 @@ export const Footer = () => {
         </div>
         <div className="col-span-6 lg:col-span-2 flex flex-col items-center lg:items-start gap-4">
           <h3 className="font-display text-lg">Quick Access</h3>
-          <div className="flex flex-col">
+          <div className="flex flex-col items-center">
             {navigationItems.map((item, index) => {
               return (
                 <div key={index}>

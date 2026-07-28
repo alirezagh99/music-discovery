@@ -180,7 +180,7 @@ const DiscoverPage = () => {
       {foundedSong.title ? (
         <div className="flex justify-center mt-10">
           <p className="text-base lg:text-xl bg-white border rounded-base px-4 py-2">
-            Found it! The song's title is {foundedSong.title.split(".")[0]}
+            Found it! The song's title is "{foundedSong.title.split(".")[0]}"
           </p>
         </div>
       ) : foundedSong.error ? (
