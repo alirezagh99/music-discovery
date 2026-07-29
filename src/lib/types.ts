@@ -1,6 +1,8 @@
 export type Peak = {
-  time: number;
+  // time: number;
   frequency: number;
+  frame: number;
+  // bin: number;
   magnitude: number;
 };
 
