@@ -27,22 +27,58 @@ export async function identifySong(
     },
   });
 
-  const userOffsets = new Map(fingerprints.map((fp) => [fp.hash, fp.offset]));
+  // const userOffsets = new Map(fingerprints.map((fp) => [fp.hash, fp.offset]));
+  const userOffsets = new Map<string, number[]>();
+
+  for (const fp of fingerprints) {
+    const offsets = userOffsets.get(fp.hash);
+
+    if (offsets) {
+      offsets.push(fp.offset);
+    } else {
+      userOffsets.set(fp.hash, [fp.offset]);
+    }
+  }
+
   const votes = new Map<string, number>();
   const BUCKET_SIZE = 0.02;
-  for (let i = 0; i < matches.length; i++) {
-    const userOffset = userOffsets.get(matches[i].hash);
 
-    if (userOffset === undefined) continue;
+  for (const match of matches) {
+    const offsets = userOffsets.get(match.hash);
 
-    const offsetDifference = matches[i].offset - userOffset;
+    if (!offsets) continue;
 
-    const bucket = Math.round(offsetDifference / BUCKET_SIZE) * BUCKET_SIZE;
+    // Every occurrence of this hash in the user's recording votes
+    for (const userOffset of offsets) {
+      const offsetDifference = match.offset - userOffset;
 
-    const key = `${matches[i].songId}-${bucket}`;
+      const bucket = Math.round(offsetDifference / BUCKET_SIZE) * BUCKET_SIZE;
 
-    votes.set(key, (votes.get(key) ?? 0) + 1);
+      const key = `${match.songId}-${bucket}`;
+
+      votes.set(key, (votes.get(key) ?? 0) + 1);
+    }
   }
+
+  const sortedVotes = [...votes.entries()]
+    .sort((a, b) => b[1] - a[1])
+    .slice(0, 10);
+
+  console.log("sortedVotesssssssssssssssss: ");
+  console.table(sortedVotes.slice(0, 10));
+  // for (let i = 0; i < matches.length; i++) {
+  //   const userOffset = userOffsets.get(matches[i].hash);
+
+  //   if (userOffset === undefined) continue;
+
+  //   const offsetDifference = matches[i].offset - userOffset;
+
+  //   const bucket = Math.round(offsetDifference / BUCKET_SIZE) * BUCKET_SIZE;
+
+  //   const key = `${matches[i].songId}-${bucket}`;
+
+  //   votes.set(key, (votes.get(key) ?? 0) + 1);
+  // }
 
   let bestKey: string | null = null;
   let bestVotes = 0;

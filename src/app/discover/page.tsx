@@ -7,7 +7,7 @@ import { generateFingerprints } from "@/lib/generateFingerprints";
 import { decodeBlob } from "@/lib/decodeBlob";
 import { Button } from "@/components/ui/button";
 import { SectionLayout } from "@/components/Layout/Components/SectionLayout";
-import { Disc } from "lucide-react";
+import { CheckCircle2, CircleAlert, Disc } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { identifySong } from "@/actions/identifySong";
 
@@ -30,9 +30,6 @@ const DiscoverPage = () => {
   const recorderRef = useRef<MediaRecorder | null>(null);
   const streamRef = useRef<MediaStream | null>(null);
   const stopTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
-
-  console.log("loading: ", loading);
-  console.log("foundedSong: ", foundedSong);
 
   async function startRecording() {
     // if resolved, returns a MediaStream object
@@ -113,10 +110,13 @@ const DiscoverPage = () => {
 
     const peaks = generatePeaks(audioBufferLike);
 
-    // console.log({ peaks });
+    // console.log("peaks: ", peaks);
     const fingerprints = generateFingerprints(peaks);
 
-    // console.log({ fingerprints });
+    const uniqueHashes = new Set(fingerprints.map((fp) => fp.hash));
+    console.log("total:", fingerprints.length);
+    console.log("unique:", uniqueHashes.size);
+
     const result = await identifySong(fingerprints);
 
     setLoading(false);
@@ -178,6 +178,51 @@ const DiscoverPage = () => {
       </div>
 
       {foundedSong.title ? (
+        <div className="mt-10 flex justify-center">
+          <div className="w-full max-w-xl rounded-base border border-border bg-white p-6 shadow-shadow">
+            <div className="flex items-center justify-center gap-2 text-green-600">
+              <CheckCircle2 className="size-6" />
+              <span className="text-lg font-bold">Song Identified</span>
+            </div>
+
+            <p className="mt-4 text-center text-3xl font-display font-bold text-foreground">
+              {foundedSong.title.split(".")[0]}
+            </p>
+
+            <p className="mt-3 text-center text-muted-foreground">
+              We found a matching song from your recording.
+            </p>
+
+            {/* <div className="mt-6 flex justify-center">
+              <Button onClick={resetRecording}>Identify Another Song</Button>
+            </div> */}
+          </div>
+        </div>
+      ) : foundedSong.error ? (
+        <div className="mt-10 flex justify-center">
+          <div className="w-full max-w-xl rounded-base border border-border bg-white p-6 shadow-shadow">
+            <div className="flex items-center justify-center gap-2 text-red-500">
+              <CircleAlert className="size-6" />
+              <span className="text-lg font-bold">No Match Found</span>
+            </div>
+
+            <p className="mt-4 text-center text-lg">
+              We couldn't confidently identify this recording.
+            </p>
+
+            <p className="mt-2 text-center text-muted-foreground">
+              Try recording again in a quieter environment or let the song play
+              for a few more seconds.
+            </p>
+
+            {/* <div className="mt-6 flex justify-center">
+              <Button onClick={resetRecording}>Try Again</Button>
+            </div> */}
+          </div>
+        </div>
+      ) : null}
+
+      {/* {foundedSong.title ? (
         <div className="flex justify-center mt-10">
           <p className="text-base lg:text-xl bg-white border rounded-base px-4 py-2">
             Found it! The song's title is "{foundedSong.title.split(".")[0]}"
@@ -189,7 +234,7 @@ const DiscoverPage = () => {
             Unfortunately we couldn't find your song, please record again.
           </p>
         </div>
-      ) : null}
+      ) : null} */}
       {/* <div>{audioUrl && <audio controls src={audioUrl} />}</div> */}
       {/* <div className="h-25 flex items-center justify-center">
         <Player />

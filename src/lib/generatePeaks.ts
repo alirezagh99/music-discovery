@@ -24,7 +24,7 @@ export function generatePeaks(audioBuffer: AudioBufferLike) {
 
   const WINDOW_SIZE = 2048;
 
-  const TOP_PEAKS_PER_FRAME = 5;
+  const TOP_PEAKS_PER_FRAME = 3;
 
   const fft = new FFT(WINDOW_SIZE);
 
@@ -54,22 +54,21 @@ export function generatePeaks(audioBuffer: AudioBufferLike) {
     }
 
     const framePeaks: Peak[] = [];
-
     // const MIN_MAGNITUDE = 90;
-    const maxMagnitude = Math.max(...magnitudes);
-    const MIN_MAGNITUDE = maxMagnitude * 0.5;
+    // const maxMagnitude = Math.max(...magnitudes);
+    // const MIN_MAGNITUDE = maxMagnitude * 0.9;
 
     for (let i = 1; i < magnitudes.length - 1; i++) {
       if (
-        magnitudes[i] > MIN_MAGNITUDE &&
+        // magnitudes[i] > MIN_MAGNITUDE &&
         magnitudes[i] > magnitudes[i - 1] &&
         magnitudes[i] > magnitudes[i + 1]
       ) {
         framePeaks.push({
-          time: offset / SAMPLE_RATE,
-
+          // time: offset / SAMPLE_RATE,
+          frame: offset / WINDOW_SIZE,
           frequency: (i * SAMPLE_RATE) / WINDOW_SIZE,
-
+          // bin: i,
           magnitude: magnitudes[i],
         });
       }
