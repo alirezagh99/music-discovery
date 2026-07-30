@@ -7,6 +7,7 @@ type ResultProp = {
   title: string | null;
   error: string | null;
   id: number | null;
+  confidence: "High" | "Medium" | "Low" | "";
 };
 
 export async function identifySong(
@@ -64,21 +65,32 @@ export async function identifySong(
     .sort((a, b) => b[1] - a[1])
     .slice(0, 10);
 
-  console.log("sortedVotesssssssssssssssss: ");
+  const sortedVotesAll = [...votes.entries()].sort((a, b) => b[1] - a[1]);
+
   console.table(sortedVotes.slice(0, 10));
-  // for (let i = 0; i < matches.length; i++) {
-  //   const userOffset = userOffsets.get(matches[i].hash);
 
-  //   if (userOffset === undefined) continue;
+  const winningSongId = sortedVotesAll[0][0].split("-")[0];
 
-  //   const offsetDifference = matches[i].offset - userOffset;
+  const nextSong = sortedVotesAll.findIndex(([key]) => {
+    const songId = key.split("-")[0];
+    return songId !== winningSongId;
+  });
 
-  //   const bucket = Math.round(offsetDifference / BUCKET_SIZE) * BUCKET_SIZE;
+  const ratio =
+    nextSong === -1
+      ? Infinity
+      : sortedVotesAll[0][1] / sortedVotesAll[nextSong][1];
 
-  //   const key = `${matches[i].songId}-${bucket}`;
-
-  //   votes.set(key, (votes.get(key) ?? 0) + 1);
-  // }
+  let confidence: "High" | "Medium" | "Low" | "";
+  if (ratio > 3) {
+    confidence = "High";
+  } else if (ratio > 1.5) {
+    confidence = "Medium";
+  } else {
+    confidence = "Low";
+  }
+  console.log("confidence: ", confidence);
+  console.log("ratio: ", ratio);
 
   let bestKey: string | null = null;
   let bestVotes = 0;
@@ -91,7 +103,7 @@ export async function identifySong(
   }
 
   if (!bestKey) {
-    return { title: null, error: "not found", id: null }; // No matches found
+    return { title: null, error: "not found", id: null, confidence: "" }; // No matches found
   }
 
   const [songIdString, bucketString] = bestKey.split("-");
@@ -105,5 +117,10 @@ export async function identifySong(
     },
   });
 
-  return { title: song?.title ?? null, id: song?.id ?? null, error: null };
+  return {
+    title: song?.title ?? null,
+    id: song?.id ?? null,
+    error: null,
+    confidence,
+  };
 }
