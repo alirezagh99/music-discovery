@@ -15,6 +15,7 @@ type FoundedSong = {
   title: string | null;
   error: string | null;
   id: number | null;
+  confidence: "High" | "Medium" | "Low" | "";
 };
 
 const DiscoverPage = () => {
@@ -26,6 +27,7 @@ const DiscoverPage = () => {
     title: null,
     error: null,
     id: null,
+    confidence: "",
   });
   const recorderRef = useRef<MediaRecorder | null>(null);
   const streamRef = useRef<MediaStream | null>(null);
@@ -180,9 +182,30 @@ const DiscoverPage = () => {
       {foundedSong.title ? (
         <div className="mt-10 flex justify-center">
           <div className="w-full max-w-xl rounded-base border border-border bg-white p-6 shadow-shadow">
-            <div className="flex items-center justify-center gap-2 text-green-600">
-              <CheckCircle2 className="size-6" />
-              <span className="text-lg font-bold">Song Identified</span>
+            <div className="flex items-center justify-between">
+              <div className="flex items-center justify-center gap-2 text-green-600">
+                <CheckCircle2 className="size-6" />
+                <span className="text-lg font-bold">Song Identified</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <span className="text-lg font-bold text-gray-900">
+                  Confidence:
+                </span>
+                <span
+                  className={cn(
+                    "border px-2 py-1 rounded-xl text-sm",
+                    foundedSong.confidence === "High"
+                      ? "border-green-700 bg-green-200 text-green-700"
+                      : foundedSong.confidence === "Medium"
+                        ? "border-yellow-700 bg-yellow-200 text-yellow-700"
+                        : foundedSong.confidence === "Low"
+                          ? "border-red-700 bg-red-200 text-red-700"
+                          : "",
+                  )}
+                >
+                  {foundedSong.confidence}
+                </span>
+              </div>
             </div>
 
             <p className="mt-4 text-center text-3xl font-display font-bold text-foreground">
